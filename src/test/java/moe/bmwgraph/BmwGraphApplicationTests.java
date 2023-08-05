@@ -1,4 +1,4 @@
-package moe.bmwgraph.bmwgraph;
+package moe.bmwgraph;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
