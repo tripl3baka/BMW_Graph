@@ -20,11 +20,13 @@ body {
     background-color: #222;
 }
 
-.footer {
-    background-color: #222;
-    color: #fff;
-    padding: 10px 0;
-    text-align: center;
+footer {
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+    padding: 10px;
+    left: 0px;
+    background-color: #444;
 }
 
 .center-rectangle {
