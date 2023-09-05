@@ -22,11 +22,14 @@ public class FileStorageService {
 
     @Autowired
     public FileStorageService(Environment env) {
-        this.fileStorageLocation = Paths
-                .get(env.getProperty("app.file.upload-dir",
-                        System.getProperty("java.io.tmpdir")))
-                        .toAbsolutePath().normalize();
-
+        this.fileStorageLocation = Paths.get(env.getProperty("app.file.upload-dir", "/data/upload_tmp"))
+                .toAbsolutePath().normalize();
+        try {
+            Files.createDirectories(this.fileStorageLocation);
+        } catch (Exception ex) {
+            throw new RuntimeException(
+                    "Could not create the directory where the uploaded files will be stored.", ex);
+        }
     }
 
     private String getFileExtension(String fileName) {
@@ -41,11 +44,12 @@ public class FileStorageService {
     public String storeFile(MultipartFile file) {
 
         String fileName =
-                new Date().getTime() + "-sheet." + getFileExtension(file.getOriginalFilename());
+                new Date().getTime() + "-csv." + getFileExtension(file.getOriginalFilename());
 
         try {
             Path targetLocation = this.fileStorageLocation.resolve(fileName);
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+            System.out.println(fileName);
             return fileName;
 
         } catch (IOException ex) {
@@ -54,7 +58,7 @@ public class FileStorageService {
     }
 
     public String getFileURL(String filename) {
-        return System.getProperty("java.io.tmpdir") + filename;
+        return "/data/upload_tmp" + filename;
     }
 
     public Path load(String filename) {
@@ -69,5 +73,4 @@ public class FileStorageService {
             throw new RuntimeException(e);
         }
     }
-
 }
