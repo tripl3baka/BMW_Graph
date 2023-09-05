@@ -12,6 +12,9 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container">
+        <div class="col-md-auto">
+            <img src="/BMW.png" alt="..." height="75"></a>
+        </div>
         <a class="navbar-brand" href="#">BMW Graphing Tool</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -20,10 +23,10 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Upload File</a>
+                    <a class="nav-link" href="#">Uploaded files</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Your graphs</a>
+                    <a class="nav-link" href="#">Pending graphs</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Edit graph</a>
@@ -36,10 +39,10 @@
 <div class="container mt-4 mt-4 flex-grow-1">
     <div class="center-rectangle">
         <div class="col-4">
-            <h2>Upload .csv File</h2>
+            <h2>Upload TestO logfile</h2>
             <form method="post" action="upload" enctype="multipart/form-data" th:object="${uploadedData}">
                 <div class="mb-3">
-                    <label for="csvFile" class="form-label">Choose a .csv file</label>
+                    <label for="csvFile" class="form-label">Select .csv file</label>
                     <input type="file" class="form-control" id="csvFile" name="csvFile" accept=".csv">
                 </div>
                 <button type="submit" class="btn btn-violet">Upload</button>
@@ -47,7 +50,7 @@
         </div>
         <div class="gradient-overlay"></div>
         <div class="col-8">
-            <img class='img-fluid w-100'src="/title.png" alt="Example Image">
+            <img class='img-fluid w-100' src="/poster.png" alt="Main Page image">
         </div>
     </div>
 </div>
