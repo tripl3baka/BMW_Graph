@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class MainPageController {
 
     @GetMapping("/graph")
-    public String displayMainPageAction(){
+    public String displayUploadPage(){
         return "index";
     }
 }
