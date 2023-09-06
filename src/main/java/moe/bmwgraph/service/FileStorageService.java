@@ -9,6 +9,7 @@ import java.nio.file.StandardCopyOption;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -22,7 +23,7 @@ public class FileStorageService {
 
     @Autowired
     public FileStorageService(Environment env) {
-        this.fileStorageLocation = Paths.get(env.getProperty("app.file.upload-dir", "/data/upload_tmp"))
+        this.fileStorageLocation = Paths.get(env.getProperty("app.file.upload-dir", "./uploads/csv"))
                 .toAbsolutePath().normalize();
         try {
             Files.createDirectories(this.fileStorageLocation);
@@ -31,6 +32,7 @@ public class FileStorageService {
                     "Could not create the directory where the uploaded files will be stored.", ex);
         }
     }
+
 
     private String getFileExtension(String fileName) {
         if (fileName == null) {
@@ -49,7 +51,6 @@ public class FileStorageService {
         try {
             Path targetLocation = this.fileStorageLocation.resolve(fileName);
             Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
-            System.out.println(fileName);
             return fileName;
 
         } catch (IOException ex) {
@@ -57,15 +58,15 @@ public class FileStorageService {
         }
     }
 
-    public String getFileURL(String filename) {
-        return "/data/upload_tmp" + filename;
+    public String getFileURL(String filename){
+        return "/uploads/files/" + filename;
     }
 
     public Path load(String filename) {
         return fileStorageLocation.resolve(filename);
     }
 
-    public Resource openFile(String filename) {
+    public Resource openFile(String filename){
         try {
             Path file = load(filename);
             return new UrlResource(file.toUri());
@@ -73,4 +74,5 @@ public class FileStorageService {
             throw new RuntimeException(e);
         }
     }
+
 }
