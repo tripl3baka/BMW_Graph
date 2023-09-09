@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class BmwGraphApplication {
+public class graphtool {
 
 	public static void main(String[] args) {
-		SpringApplication.run(BmwGraphApplication.class, args);
+		SpringApplication.run(graphtool.class, args);
 	}
 
 }
