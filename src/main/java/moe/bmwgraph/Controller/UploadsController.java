@@ -39,7 +39,7 @@ public class UploadsController {
                             fileStorageService.storeFile(uploadedData.csvFile)
             );
         }
-        return "redirect:/graph";
+        return "redirect:/";
     }
 
 }

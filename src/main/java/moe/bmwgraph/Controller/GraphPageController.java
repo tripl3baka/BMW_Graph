@@ -4,10 +4,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class MainPageController {
+public class GraphPageController {
 
-    @GetMapping("/")
-    public String displayUploadPage(){
-        return "index";
+    @GetMapping("/graph")
+    public String displayGraphPageAction(){
+        return "graphPage";
     }
 }

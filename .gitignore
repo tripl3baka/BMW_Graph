@@ -39,4 +39,4 @@ mvnw
 
 ### uploaded files ###
 !/uploads/files/.gitkeep
-/uploads/files/*
+/uploads/files/
