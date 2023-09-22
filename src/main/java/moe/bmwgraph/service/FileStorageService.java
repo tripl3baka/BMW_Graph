@@ -61,13 +61,13 @@ public class FileStorageService {
         return "/uploads/files/" + filename;
     }
 
-    public Path load(String filename) {
+    public Path getFilePath(String filename) {
         return fileStorageLocation.resolve(filename);
     }
 
     public Resource openFile(String filename){
         try {
-            Path file = load(filename);
+            Path file = getFilePath(filename);
             return new UrlResource(file.toUri());
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);

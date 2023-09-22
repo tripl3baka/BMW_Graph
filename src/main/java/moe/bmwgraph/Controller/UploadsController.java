@@ -1,6 +1,5 @@
 package moe.bmwgraph.Controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -33,13 +32,12 @@ public class UploadsController {
         MultipartFile csvFile){
     }
     @PostMapping("/upload")
-    private String storeAction(UploadedData uploadedData){
+    private String storeAction(UploadedData uploadedData) {
+        String filename = null;
         if (!uploadedData.csvFile.isEmpty()) {
-                    fileStorageService.getFileURL(
-                            fileStorageService.storeFile(uploadedData.csvFile)
-            );
+            filename = fileStorageService.storeFile(uploadedData.csvFile);
         }
-        return "redirect:/";
+        return "redirect:/edit/" + filename;
     }
 
 }
