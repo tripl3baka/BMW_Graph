@@ -38,11 +38,26 @@
 
 <div class="container">
     <div class="center-rectangle">
-        <div class="row">
+        <div class="table-wrapper">
+        <table class="table">
+            <thead>
+            <tr>
+                <th th:each="col :${records.get(0)}"><label>
+                    <input type="checkbox">
+                    <span th:text="${col}"></span>
+                </label></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="row: ${records.subList(1,records.size())}">
+                <td th:each="col :${row}" th:text="${col}">#</td>
+            </tr>
+            </tbody>
+        </table>
         </div>
+        <canvas id="chart"></canvas>
     </div>
 </div>
-
 
 
 <footer class="text-white text-center py-3 mt-5">
@@ -52,6 +67,30 @@
 <script src="
 https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js
 "></script>
+<script src="
+https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js
+"></script>
+<script src="
+https://cdnjs.cloudflare.com/ajax/libs/d3/5.7.0/d3.min.js
+"></script>
+
+
+<script>
+    Chart.defaults.global.defaultFontColor = '#FFF';
+    var chart = new Chart('chart', {
+        type: 'horizontalBar',
+        data: {
+            labels: ['A', 'B', 'C'],
+            datasets: [
+                {
+                    data: [10, 20, 30],
+                    borderColor: '#36A2EB',
+                    backgroundColor: '#9BD0F5',
+                }
+            ]
+        }
+    });
+</script>
 </body>
 </html>
 

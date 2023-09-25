@@ -114,3 +114,10 @@ footer {
     background: url(./title.png) center center no-repeat;
     background-size: cover;
 }
+
+.table-wrapper{
+    color: white;
+    overflow-x: scroll;
+    overflow-y: scroll;
+    height: 500px;
+}

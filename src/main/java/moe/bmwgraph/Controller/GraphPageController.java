@@ -10,9 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.function.Consumer;
 
 @Controller
@@ -39,6 +37,8 @@ public class GraphPageController {
         System.out.println(records.size());
 
         model.addAttribute("records", records);
+
+
         return "graphEditPage";
     }
 }
