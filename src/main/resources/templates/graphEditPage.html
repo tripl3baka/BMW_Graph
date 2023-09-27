@@ -39,21 +39,31 @@
 <div class="container">
     <div class="center-rectangle">
         <div class="table-wrapper">
-        <table class="table">
-            <thead>
-            <tr>
-                <th th:each="col :${records.get(0)}"><label>
-                    <input type="checkbox">
-                    <span th:text="${col}"></span>
-                </label></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="row: ${records.subList(1,records.size())}">
-                <td th:each="col :${row}" th:text="${col}">#</td>
-            </tr>
-            </tbody>
-        </table>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th th:each="col :${records.get(0)}" style="white-space: nowrap">
+                        <label>
+                            <input type="radio" name="x-axis">
+                            X axis
+                        </label>
+                            <br/>
+                        <label>
+                            <input type="checkbox">
+                            Y axis
+                        </label>
+                            <br/>
+                            <span th:text="${col}"></span>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="row: ${records.subList(1,records.size())}">
+                    <td th:each="col :${row}" th:text="${col}">#</td>
+                    <td th:if="${records.get(0).size() gt row.size()}" colspan="99"></td>
+                </tr>
+                </tbody>
+            </table>
         </div>
         <canvas id="chart"></canvas>
     </div>
@@ -75,18 +85,26 @@ https://cdnjs.cloudflare.com/ajax/libs/d3/5.7.0/d3.min.js
 "></script>
 
 
-<script>
+<script th:inline="javascript">
     Chart.defaults.global.defaultFontColor = '#FFF';
-    var chart = new Chart('chart', {
-        type: 'horizontalBar',
+    const values = [[${data}]];
+
+    const chart = new Chart('chart', {
+        type: 'line',
         data: {
-            labels: ['A', 'B', 'C'],
+            labels: values[1],
             datasets: [
                 {
-                    data: [10, 20, 30],
+                    data: values[3],
                     borderColor: '#36A2EB',
-                    backgroundColor: '#9BD0F5',
+                    backgroundColor: 'rgba(155,208,245,0)',
+                },
+                {
+                    data: values[4],
+                    borderColor: '#11ff89',
+                    backgroundColor: 'rgba(155,208,245,0)',
                 }
+
             ]
         }
     });

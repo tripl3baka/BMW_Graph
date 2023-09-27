@@ -2,6 +2,7 @@ body {
     background-color: #1c232d;
     color: #fff;
     font-family: Arial, sans-serif;
+    padding-bottom: 100px;
 }
 
 .container {
@@ -120,4 +121,12 @@ footer {
     overflow-x: scroll;
     overflow-y: scroll;
     height: 500px;
+}
+
+.table-wrapper .table{
+    color: #ffe9e9;
+}
+
+.table-wrapper .table tr:nth-child(2n){
+    background-color: #27303f;
 }

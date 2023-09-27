@@ -1,5 +1,6 @@
 package moe.bmwgraph.Controller;
 
+import com.google.gson.Gson;
 import moe.bmwgraph.service.FileStorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,7 +38,22 @@ public class GraphPageController {
         System.out.println(records.size());
 
         model.addAttribute("records", records);
+        List<List<String>> data = new ArrayList<>();
+        Gson gson = new Gson();
 
+        for (int i = 0; i < records.get(0).size(); i++) {
+            List<String> jsonList = new ArrayList<>();
+
+            for (int j = 1; j < records.size(); j++) {
+                if (i < records.get(j).size()) {
+                    jsonList.add(
+                            records.get(j).get(i)
+                    );
+                }
+            }
+            data.add(jsonList);
+        }
+        model.addAttribute("data", data);
 
         return "graphEditPage";
     }
