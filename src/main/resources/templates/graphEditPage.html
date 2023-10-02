@@ -111,14 +111,6 @@ https://cdnjs.cloudflare.com/ajax/libs/d3/5.7.0/d3.min.js
             ]
         }
     });
-
-    document.querySelectorAll("[data-x-axis-id]").forEach(radio=>radio.addEventListener("change", function(e){
-        e.preventDefault();
-        const selectedLabel = this.dataset.xAxisId
-        chart.data.labels = values[selectedLabel];
-        chart.update();
-    }));
-
     document.querySelectorAll("[data-y-axis-id]").forEach(checkbox=>checkbox.addEventListener("change", function(e){
         e.preventDefault();
         const checkedDatasets = [];
@@ -134,6 +126,20 @@ https://cdnjs.cloudflare.com/ajax/libs/d3/5.7.0/d3.min.js
         chart.data.datasets = checkedDatasets;
         chart.update();
     }));
+
+    document.querySelectorAll("[data-x-axis-id]").forEach(radio=>radio.addEventListener("change", function(e){
+        e.preventDefault();
+        const selectedLabel = this.dataset.xAxisId
+        chart.data.labels = values[selectedLabel];
+         if(radio.enabled)
+             document.querySelectorAll("[data-y-axis-id]").forEach(function(checkbox){
+                 checkbox.disabled = true;
+        });
+
+            chart.update();
+    }));
+
+
 
 </script>
 </body>
