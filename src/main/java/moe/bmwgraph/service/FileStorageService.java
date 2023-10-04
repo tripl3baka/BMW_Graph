@@ -1,11 +1,12 @@
 package moe.bmwgraph.service;
 
-import java.io.IOException;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Base64;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +21,23 @@ public class FileStorageService {
 
     private final Path fileStorageLocation;
 
+    private final Path imgStorageLocation;
+
     @Autowired
     public FileStorageService(Environment env) {
         this.fileStorageLocation = Paths.get(env.getProperty("app.file.upload-dir", "./uploads/csv"))
                 .toAbsolutePath().normalize();
         try {
             Files.createDirectories(this.fileStorageLocation);
+        } catch (Exception ex) {
+            throw new RuntimeException(
+                    "Could not create the directory where the uploaded files will be stored.", ex);
+        }
+
+        this.imgStorageLocation = Paths.get(env.getProperty("app.file.upload-dir", "./uploads/img"))
+                .toAbsolutePath().normalize();
+        try {
+            Files.createDirectories(this.imgStorageLocation);
         } catch (Exception ex) {
             throw new RuntimeException(
                     "Could not create the directory where the uploaded files will be stored.", ex);
@@ -57,7 +69,7 @@ public class FileStorageService {
         }
     }
 
-    public String getFileURL(String filename){
+    public String getFileURL(String filename) {
         return "/uploads/files/" + filename;
     }
 
@@ -65,13 +77,29 @@ public class FileStorageService {
         return fileStorageLocation.resolve(filename);
     }
 
-    public Resource openFile(String filename){
+    public Resource openFile(String filename) {
         try {
             Path file = getFilePath(filename);
             return new UrlResource(file.toUri());
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public String storeImgFile(String base64String) {
+        String outputFileName =
+                new Date().getTime() + "-image.png";
+
+        String[] strings = base64String.split(",");
+
+        byte[] data = Base64.getDecoder().decode(strings[1]);
+        File file = new File(imgStorageLocation.toUri());
+        try (OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(file))) {
+            outputStream.write(data);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return outputFileName;
     }
 
 }

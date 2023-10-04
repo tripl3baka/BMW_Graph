@@ -44,16 +44,16 @@
                 <tr>
                     <th th:each="col, iStat :${records.get(0)}" style="white-space: nowrap">
                         <label>
-                            <input  type="radio" name="x-axis" th:data-x-axis-id="${iStat.index}">
+                            <input type="radio" name="x-axis" th:data-x-axis-id="${iStat.index}">
                             X axis
                         </label>
-                            <br/>
+                        <br/>
                         <label>
                             <input type="checkbox" th:data-y-axis-id="${iStat.index}">
                             Y axis
                         </label>
-                            <br/>
-                            <span th:text="${col}"></span>
+                        <br/>
+                        <span th:text="${col}"></span>
                     </th>
                 </tr>
                 </thead>
@@ -66,6 +66,9 @@
             </table>
         </div>
         <canvas id="chart"></canvas>
+    </div>
+    <div class="text-center">
+        <button type="submit" class="btn btn-violet">Generate</button>
     </div>
 </div>
 
@@ -94,31 +97,15 @@ https://cdnjs.cloudflare.com/ajax/libs/d3/5.7.0/d3.min.js
     const chart = new Chart('chart', {
 
         type: 'line',
-        data: {
-            labels: values[1],
-            datasets: [
-                {
-                    data: values[3],
-                    borderColor: '#36A2EB',
-                    backgroundColor: 'rgba(155,208,245,0)',
-                },
-                {
-                    data: values[4],
-                    borderColor: '#11ff89',
-                    backgroundColor: 'rgba(155,208,245,0)',
-                }
-
-            ]
-        }
     });
-    document.querySelectorAll("[data-y-axis-id]").forEach(checkbox=>checkbox.addEventListener("change", function(e){
+    document.querySelectorAll("[data-y-axis-id]").forEach(checkbox => checkbox.addEventListener("change", function (e) {
         e.preventDefault();
         const checkedDatasets = [];
-        document.querySelectorAll("[data-y-axis-id]").forEach(function(checkbox){
-            if(checkbox.checked){
+        document.querySelectorAll("[data-y-axis-id]").forEach(function (checkbox) {
+            if (checkbox.checked) {
                 checkedDatasets.push({
                     data: values[checkbox.dataset.yAxisId],
-                    borderColor: colors[checkbox.dataset.yAxisId%colors.length],
+                    borderColor: colors[checkbox.dataset.yAxisId % colors.length],
                     backgroundColor: 'rgba(155,208,245,0)',
                 });
             }
@@ -127,18 +114,23 @@ https://cdnjs.cloudflare.com/ajax/libs/d3/5.7.0/d3.min.js
         chart.update();
     }));
 
-    document.querySelectorAll("[data-x-axis-id]").forEach(radio=>radio.addEventListener("change", function(e){
+    document.querySelectorAll("[data-x-axis-id]").forEach(radio => radio.addEventListener("change", function (e) {
         e.preventDefault();
         const selectedLabel = this.dataset.xAxisId
         chart.data.labels = values[selectedLabel];
-         if(radio.enabled)
-             document.querySelectorAll("[data-y-axis-id]").forEach(function(checkbox){
-                 checkbox.disabled = true;
+
+
+        document.querySelectorAll("[data-y-axis-id]").forEach(function (checkbox) {
+            const selectedData = checkbox.dataset.yAxisId;
+            checkbox.disabled = (selectedLabel === selectedData);
+            if (checkbox.disabled) {
+                checkbox.checked = false;
+                checkbox.dispatchEvent(new Event("change"));
+            }
         });
 
-            chart.update();
+        chart.update();
     }));
-
 
 
 </script>
