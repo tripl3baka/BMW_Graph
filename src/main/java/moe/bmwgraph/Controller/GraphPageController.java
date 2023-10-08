@@ -21,6 +21,9 @@ public class GraphPageController {
     FileStorageService fileStorageService;
 
 
+    private record InputData(String blob){
+    }
+
     @GetMapping("/edit/{filename}")
 
     public String displayGraphPageAction(@PathVariable String filename, Model model) {
@@ -53,7 +56,7 @@ public class GraphPageController {
             }
             data.add(jsonList);
         }
-        model.addAttribute("data", data);
+        model.addAttribute("data", gson.toJson(data));
 
 
 
