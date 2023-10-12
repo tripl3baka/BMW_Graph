@@ -1,7 +1,7 @@
 Chart.defaults.global.defaultFontColor = '#FFF';
 const values = JSON.parse(document.querySelector("#table").dataset.data);
 const colors = ['#0003ff', '#11ff89', '#c73975', '#00987b',
-    '#d5a60d', '#083c1c']
+    '#d5a60d', '#bd00eb']
 
 const chart = new Chart('chart', {
 
